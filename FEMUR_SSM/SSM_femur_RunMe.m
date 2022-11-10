@@ -38,12 +38,10 @@ for k=1:datc,
 end
 
 % covariance and eigen analysis
-% what we really want is similar to... cov ~ dat_mod*dat_mod'/(shapes-1)
-% this is achieved by C = cov(dat_mod'), but the calc below produces a much
-% smaller, faster, and equivalent result w.r.t. eigen analysis
+
 C = dat_mod'*dat_mod;
 [V,D] = eig(C);
-V = normc(dat_mod*V); % normc() just normalizes each column (eigenvector)
+V = normc(dat_mod*V); % normc() normalizes each column (eigenvector)
 D = D/(datc-1);
 
 % extract eigenvalues above 60
@@ -55,15 +53,15 @@ b = v'*dat_mod;
 b_std = std(b');
 
 % Mode Shape Plots
-figure; % only need to do this once!
+figure;
 % make overlay plot of mode 1
 mode1_hi = dat_mean + b_std(1)*v(:,1);
 mode1_lo = dat_mean - b_std(1)*v(:,1);
 subplot(1,4,1); triplot(e,mode1_hi(1:datr/2,1),mode1_hi(datr/2+1:datr,1),'r--');
 hold on; axis equal; axis off; title('Mode 1: Blue(-), Red(+)');
 triplot(e,mode1_lo(1:datr/2,1),mode1_lo(datr/2+1:datr,1),'b--');
-% also show mean shape for reference if you wish...
-% triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
+% show mean shape
+triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
 
 % make overlay plot of mode 2
 mode2_hi = dat_mean + b_std(2)*v(:,2);
@@ -71,8 +69,8 @@ mode2_lo = dat_mean - b_std(2)*v(:,2);
 subplot(1,4,2); triplot(e,mode2_hi(1:datr/2,1),mode2_hi(datr/2+1:datr,1),'r--');
 hold on; axis equal; axis off; title('Mode 2: Blue(-), Red(+)');
 triplot(e,mode2_lo(1:datr/2,1),mode2_lo(datr/2+1:datr,1),'b--');
-% also show mean shape for reference if you wish...
-% triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
+% show mean shape
+triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
 
 % make overlay plot of mode 3
 mode3_hi = dat_mean + b_std(3)*v(:,3);
@@ -80,8 +78,8 @@ mode3_lo = dat_mean - b_std(3)*v(:,3);
 subplot(1,4,3); triplot(e,mode3_hi(1:datr/2,1),mode3_hi(datr/2+1:datr,1),'r--');
 hold on; axis equal; axis off; title('Mode 3: Blue(-), Red(+)');
 triplot(e,mode3_lo(1:datr/2,1),mode3_lo(datr/2+1:datr,1),'b--');
-% also show mean shape for reference if you wish...
-% triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
+% show mean shape
+triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
 
 % make overlay plot of mode 4
 mode4_hi = dat_mean + b_std(4)*v(:,4);
@@ -89,8 +87,8 @@ mode4_lo = dat_mean - b_std(4)*v(:,4);
 subplot(1,4,4); triplot(e,mode4_hi(1:datr/2,1),mode4_hi(datr/2+1:datr,1),'r--');
 hold on; axis equal; axis off; title('Mode 4: Blue(-), Red(+)');
 triplot(e,mode4_lo(1:datr/2,1),mode4_lo(datr/2+1:datr,1),'b--');
-% also show mean shape for reference if you wish...
-% triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
+% show mean shape
+triplot(e,dat_mean(1:datr/2,1),dat_mean(datr/2+1:datr,1),'k--');
 
 % save SSM for use in Prob simulation
 save SSM_femur_data e dat_mean b b_std v
