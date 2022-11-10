@@ -10,8 +10,6 @@
 % input2 = desired homogenous transform(4-by-4)
 % input3 = paramListGuess(initial guess at the parameters)
 
-% Vineet Pandey
-% 10826588
 
 function [paramList, error] = dhInvKine (linkList, desTransform, paramListGuess)
 % Argument management:
